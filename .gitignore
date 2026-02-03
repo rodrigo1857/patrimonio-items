@@ -1,0 +1,17 @@
+# Python - Archivos compilados y caché
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+DATA/
+# Base de Datos y Scripts
+*.backup
+
+# Seguridad 
+.env
+
+# Entorno de desarrollo (VS Code / PyCharm)
+.vscode/
+.idea/
