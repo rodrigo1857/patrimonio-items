@@ -94,3 +94,7 @@ create unique index unique_patrimonio_bien_estado_registrado
 create unique index unique_patrimonio_bien_estado_anulado
     on bytsscom_bytsig.patrimonio_bien (id_familia, correlativo, correlativo_ordinal)
     where patrimonio_bien.estado_patrimonio_bien::text = 'A'::text;
+
+
+UPDATE bytsscom_bytsig.patrimonio_bien SET
+    id_item_especifico = id_item WHERE id_item_especifico IS NULL;

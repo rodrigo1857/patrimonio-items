@@ -51,6 +51,11 @@ create table bytsscom_bytsig.item_familia
             references bytsscom_bytsig.item_clase
             on update cascade on delete cascade,
     secuencia_familia varchar,
+    fts_familia tsvector
+        GENERATED ALWAYS AS (
+            to_tsvector('spanish', coalesce(item_familia.nombre_familia, '')) ||
+            to_tsvector('spanish', coalesce(item_familia.secuencia_familia, ''))
+        ) STORED,
     activo             boolean DEFAULT TRUE
 );
 
