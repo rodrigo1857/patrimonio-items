@@ -80,3 +80,6 @@ create trigger familia_fts_tg
     on bytsscom_bytsig.item_familia
     for each row
 execute procedure familia_fts_fntg();
+
+
+CREATE INDEX idx_familia_fts ON bytsscom_bytsig.item_familia USING GIN (fts_familia);
