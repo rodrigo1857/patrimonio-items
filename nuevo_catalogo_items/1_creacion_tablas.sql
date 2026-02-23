@@ -51,11 +51,32 @@ create table bytsscom_bytsig.item_familia
             references bytsscom_bytsig.item_clase
             on update cascade on delete cascade,
     secuencia_familia varchar,
-    fts_familia tsvector
-        GENERATED ALWAYS AS (
-            to_tsvector('spanish', coalesce(item_familia.nombre_familia, '')) ||
-            to_tsvector('spanish', coalesce(item_familia.secuencia_familia, ''))
-        ) STORED,
+    fts_familia tsvector,
     activo             boolean DEFAULT TRUE
 );
 
+
+
+create function familia_fts_fntg() returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    NEW.fts_familia = to_tsvector('spanish', COALESCE(COALESCE(NEW.codigo_familia, '')||' '||COALESCE(NEW.nombre_familia, ''),''));
+    RETURN NEW;
+END
+$$;
+
+alter function familia_fts_fntg() owner to bytsscom_bytsig;
+
+grant execute on function familia_fts_fntg() to g_bytsscom_app;
+
+grant execute on function familia_fts_fntg() to g_rrhh_q20;
+
+
+create trigger familia_fts_tg
+    before insert or update
+        of codigo_familia, nombre_familia
+    on bytsscom_bytsig.item_familia
+    for each row
+execute procedure familia_fts_fntg();
