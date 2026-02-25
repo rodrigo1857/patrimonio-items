@@ -20,7 +20,9 @@ create table bytsscom_bytsig.item_grupo
     codigo_grupo      varchar,
     descripcion_grupo varchar,
     tipo              varchar,
-    activo             boolean DEFAULT TRUE
+    activo             boolean DEFAULT TRUE,
+    tipo_bien varchar
+
 );
 
 
